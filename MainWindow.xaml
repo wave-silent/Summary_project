@@ -1,0 +1,61 @@
+<Window x:Class="LibraryWPFApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:LibraryWPFApp"
+        Title="Библиотечная система - PostgreSQL" 
+        Height="800" Width="1100"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
+
+    <DockPanel>
+        <!-- Меню -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Обновить все данные" Click="RefreshAll_Click"/>
+                <Separator/>
+                <MenuItem Header="Выход" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Справка">
+                <MenuItem Header="О программе" Click="About_Click"/>
+            </MenuItem>
+        </Menu>
+
+        
+        <!-- Статус бар -->
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusText">Готово</TextBlock>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="RecordCountText">Записей: 0</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- Основное содержимое -->
+        <TabControl Name="MainTabControl" Margin="5">
+
+            <!-- Вкладка 1: Авторы -->
+            <TabItem Header="👥 Авторы">
+                <local:AuthorsView/>
+            </TabItem>
+
+
+            <!-- Вкладка 2: Книги -->
+            <TabItem Header="📚 Книги">
+                <local:BooksView/>
+            </TabItem>
+
+            <!-- Вкладка 3: Выдача книг -->
+            <TabItem Header="📖 Выдача книг">
+                <local:LoansView/>
+            </TabItem>
+
+            <!-- Вкладка 4: Читатели -->
+            <TabItem Header="👤 Читатели">
+                <local:ReadersView/>
+            </TabItem>
+
+        </TabControl>
+    </DockPanel>
+</Window>
