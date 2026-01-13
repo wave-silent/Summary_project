@@ -1,0 +1,126 @@
+﻿<Window x:Class="LibraryWPFApp.LoanEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d"
+        Title="Выдача книги" 
+        Height="500" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <!-- Конвертер для форматирования даты -->
+
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Text="Новая выдача книги" 
+                   FontSize="16" FontWeight="Bold" 
+                   Margin="0,0,0,15"/>
+
+        <!-- Форма выдачи -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Читатель -->
+            <TextBlock Grid.Row="0" Grid.Column="0" 
+                       Text="Читатель:" 
+                       Margin="0,0,10,10" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="0" Grid.Column="1" 
+                      ItemsSource="{Binding Readers}"
+                      DisplayMemberPath="FullName"
+                      SelectedValuePath="User_id"
+                      SelectedValue="{Binding SelectedReaderId}"
+                      Margin="0,0,0,10" Height="25"/>
+
+            <!-- Книга -->
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+                       Text="Книга:" 
+                       Margin="0,0,10,10" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" 
+                      ItemsSource="{Binding AvailableBooks}"
+                      DisplayMemberPath="DisplayInfo"
+                      SelectedValuePath="Copy_id"                    
+                      SelectedValue="{Binding SelectedCopyId}"
+                      Margin="0,0,0,10" Height="25"/>
+
+                <!-- Информация о выбранной книге -->
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                    BorderBrush="LightGray" BorderThickness="1" 
+                    CornerRadius="5" Padding="10" Margin="0,0,0,10"
+                    Background="#F8F8F8">
+                <StackPanel>
+                    <TextBlock Text="Информация о книге:" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBlock Text="{Binding SelectedBookInfo}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Дата выдачи -->
+            <TextBlock Grid.Row="3" Grid.Column="0" 
+                       Text="Дата выдачи:" 
+                       Margin="0,0,10,10" VerticalAlignment="Center"/>
+            <DatePicker Grid.Row="3" Grid.Column="1" 
+                       SelectedDate="{Binding LoanDate}" 
+                       Margin="0,0,0,10" Height="25"/>
+
+            <!-- Срок возврата -->
+            <TextBlock Grid.Row="4" Grid.Column="0" 
+                       Text="Срок возврата:" 
+                       Margin="0,0,10,10" VerticalAlignment="Center"/>
+            <DatePicker Grid.Row="4" Grid.Column="1" 
+                       SelectedDate="{Binding ReturnDate}" 
+                       Margin="0,0,0,10" Height="25"/>
+
+            <!-- Период выдачи -->
+            <TextBlock Grid.Row="5" Grid.Column="0" 
+                       Text="Период выдачи:" 
+                       Margin="0,0,10,10" VerticalAlignment="Center"/>
+            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                <RadioButton Content="14 дней" Margin="0,0,10,10" 
+                           IsChecked="{Binding IsTwoWeeks}"/>
+                <RadioButton Content="30 дней" Margin="0,0,0,10" 
+                           IsChecked="{Binding IsOneMonth}"/>
+            </StackPanel>
+
+            <!-- Примечание -->
+            <TextBlock Grid.Row="6" Grid.Column="0" 
+                       Text="Примечание:" 
+                       Margin="0,0,10,10" VerticalAlignment="Top"/>
+            <TextBox Grid.Row="6" Grid.Column="1" 
+                     Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}" 
+                     Margin="0,0,0,10" 
+                     AcceptsReturn="True" TextWrapping="Wrap" MinHeight="60"/>
+        </Grid>
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" 
+                    HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button Content="Выдать" Width="80" Height="30" 
+                    Command="{Binding SaveCommand}" 
+                    IsDefault="True" Margin="0,0,10,0"/>
+            <Button Content="Отмена" Width="80" Height="30" 
+                    Command="{Binding CancelCommand}" 
+                    IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
